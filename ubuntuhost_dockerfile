@@ -1,0 +1,16 @@
+FROM ubuntu
+ENV DEBBIAN_FRONTEND=noninteractive
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install vim openssh-server net-tools sudo -y
+RUN mkdir /home/nidhi
+RUN useradd nidhi
+RUN echo 'nidhi:nidhi123' | chpasswd
+RUN chown nidhi:nidhi /home/nidhi
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+RUN sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config
+RUN echo 'root:password' | chpasswd
+RUN echo "nidhi    ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
+USER nidhi
+WORKDIR /home/nidhi
+EXPOSE 22
