@@ -13,5 +13,5 @@ RUN chown nidhi:nidhi /home/nidhi
 RUN echo "nidhi    ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 USER nidhi
 WORKDIR /home/nidhi
-#RUN ssh-keygen -q -t rsa -N '' -f /home/nidhi/.ssh/id_rsa
+RUN ssh-keygen -q -t rsa -N '' -f /home/nidhi/.ssh/id_rsa
 EXPOSE 22 

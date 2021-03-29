@@ -2,15 +2,16 @@ FROM amazonlinux
 ENV DEBBIAN_FRONTEND=noninteractive
 RUN yum update -y
 RUN yum upgrade -y
-RUN yum install vim openssh-server net-tools sudo -y
+RUN yum install vim openssh* net-tools sudo -y
 RUN useradd nidhi
 RUN echo 'nidhi:nidhi123' | chpasswd
-#RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
-#RUN sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config
+RUN sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config
 RUN echo 'root:password' | chpasswd
 RUN echo "nidhi    ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 COPY systemctl.py /usr/bin/systemctl
 RUN chmod a+x /usr/bin/systemctl
+WORKDIR /etc/ssh/
+RUN ssh-keygen -A
 USER nidhi
 WORKDIR /home/nidhi
 EXPOSE 22
