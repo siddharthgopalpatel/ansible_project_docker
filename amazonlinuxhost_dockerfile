@@ -21,3 +21,4 @@ RUN ssh-keygen -A
 USER nidhi
 WORKDIR /home/nidhi
 EXPOSE 22
+ENTRYPOINT sudo systemctl restart sshd && bash

@@ -20,3 +20,4 @@ RUN chown -R nidhi:nidhi /home/nidhi/.ssh/
 USER nidhi
 WORKDIR /home/nidhi
 EXPOSE 22
+ENTRYPOINT sudo service ssh restart && bash
