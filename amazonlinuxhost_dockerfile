@@ -1,3 +1,5 @@
+FROM ansiblehostimage AS stage1
+
 FROM amazonlinux
 ENV DEBBIAN_FRONTEND=noninteractive
 RUN yum update -y
@@ -8,6 +10,10 @@ RUN echo 'nidhi:nidhi123' | chpasswd
 RUN sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config
 RUN echo 'root:password' | chpasswd
 RUN echo "nidhi    ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
+COPY --from=stage1  /home/nidhi/.ssh/id_rsa.pub /home/nidhi/.ssh/authorized_keys
+RUN chmod 600 /home/nidhi/.ssh/authorized_keys
+RUN chmod 700 /home/nidhi/.ssh/
+RUN chown -R nidhi:nidhi /home/nidhi/.ssh/
 COPY systemctl.py /usr/bin/systemctl
 RUN chmod a+x /usr/bin/systemctl
 WORKDIR /etc/ssh/

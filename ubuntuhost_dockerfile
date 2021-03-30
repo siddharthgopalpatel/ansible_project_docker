@@ -1,3 +1,5 @@
+FROM ansiblehostimage AS stage1
+
 FROM ubuntu
 ENV DEBBIAN_FRONTEND=noninteractive
 RUN apt-get update
@@ -11,6 +13,10 @@ RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/
 RUN sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config
 RUN echo 'root:password' | chpasswd
 RUN echo "nidhi    ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
+COPY --from=stage1  /home/nidhi/.ssh/id_rsa.pub /home/nidhi/.ssh/authorized_keys
+RUN chmod 600 /home/nidhi/.ssh/authorized_keys
+RUN chmod 700 /home/nidhi/.ssh/
+RUN chown -R nidhi:nidhi /home/nidhi/.ssh/ 
 USER nidhi
 WORKDIR /home/nidhi
 EXPOSE 22
