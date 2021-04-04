@@ -1,4 +1,4 @@
-FROM ansiblehostimage AS stage1
+FROM ansibleserverimage AS stage1
 
 FROM amazonlinux
 ENV DEBBIAN_FRONTEND=noninteractive
