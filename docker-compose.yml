@@ -12,7 +12,7 @@ services:
     #  - "22"
     tty: true
     networks:
-      - nidhi
+      - ansible_network
 
   ubuntuhost:
     build:
@@ -25,7 +25,7 @@ services:
     #  - "22"
     tty: true
     networks:
-      - nidhi
+      - ansible_network
     depends_on:
       - ansibleserver
 
@@ -41,13 +41,13 @@ services:
     #  - "22"
     tty: true
     networks:
-      - nidhi
+      - ansible_network
     depends_on:
       - ansibleserver
 
 
 
 networks:
-  nidhi:
+  ansible_network:
     driver: bridge
 
