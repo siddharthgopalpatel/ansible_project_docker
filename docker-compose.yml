@@ -45,6 +45,20 @@ services:
     depends_on:
       - ansibleserver
 
+  redhathost:
+    build:
+      context: .
+      dockerfile: redhathost_dockerfile
+    image: redhathostimage
+    container_name: redhathost
+    restart: unless-stopped
+    #ports:
+    #  - "22"
+    tty: true
+    networks:
+      - ansible_network
+    depends_on:
+      - ansibleserver
 
 
 networks:
